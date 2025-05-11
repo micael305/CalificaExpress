@@ -15,26 +15,33 @@ END_VAR
 
 // Input
 FUZZIFY postura
-    TERM malo := (0, 1) (2, 1) (4,0); 
+    TERM mala := (0, 1) (2, 1) (4,0); 
     TERM regular := (3,0) (5,1) (7,0);
-    TERM bueno := (6, 0) (8, 1) (10, 1);
+    TERM buena := (6, 0) (8, 1) (10, 1);
 END_FUZZIFY
 
 //TERM poor: arranco de (0,1) a (4,0). Unir puntos y formar area
 
+// Input
+FUZZIFY desarrollo
+    TERM malo := (0, 1) (2, 1) (4,0) ;
+    TERM regular := (3, 0) (4, 1) (6, 1) (7, 0);
+    TERM bueno := (6,0) (7,1) (8,1) (9,0);
+    TERM excelente := (8,0) (9,1) (10,1);
+END_FUZZIFY
 
 // Input
-FUZZIFY food
-    TERM rancid := (0, 1) (1, 1) (4,0) ;
-    TERM normal := (3, 0) (4, 1) (6, 1) (8, 0);
-    TERM delicious := (7,0) (9,1);
+FUZZIFY oratoria
+    TERM mala := (0, 1) (2, 1) (4,0) ;
+    TERM regular := (3, 0) (5, 1) (7, 0);
+    TERM buena := (6,0) (8,1) (10,1);
 END_FUZZIFY
 
 // Output
-DEFUZZIFY tip
-    TERM cheap := (0,0) (5,1) (10,0); 
-    TERM average := (10,0) (15,1) (20,0);
-    TERM generous := (20,0) (25,1) (30,0);
+DEFUZZIFY nota
+    TERM baja := (0,1) (2,1) (4,0); 
+    TERM media := (3,0) (5,1) (6,1) (8,0);
+    TERM alta := (6,0) (8,1) (10,1);
     // Use 'Center Of Gravity' defuzzification method
     METHOD : COG;
     // Default value is 0 (if no rule activates defuzzifier)
@@ -62,32 +69,121 @@ RULEBLOCK No1
     // Use 'max' accumulation method
     ACCU : MAX;
 
-    RULE 1 : IF service IS poor AND food IS rancid 
-                THEN tip IS cheap;
+    //postura mala
 
-    RULE 2 : IF service IS good AND food IS rancid
-                THEN tip IS cheap; 
+    RULE 1 : IF postura IS mala AND desarrollo IS malo AND oratoria IS mala
+                THEN nota IS baja;
 
-    RULE 3 : IF service IS excellent AND food IS rancid 
-                THEN tip IS cheap;
+    RULE 2 : IF postura IS mala AND desarrollo IS regular AND oratoria IS mala
+                THEN nota IS baja;
+
+    RULE 3 : IF postura IS mala AND desarrollo IS bueno AND oratoria IS mala
+                THEN nota IS media;
     
-    RULE 4 : IF service IS poor AND food IS normal 
-                THEN tip IS cheap;
+    RULE 4 : IF postura IS mala AND desarrollo IS excelente AND oratoria IS mala
+                THEN nota IS media;
                 
-    RULE 5 : IF service IS good AND food IS normal 
-                THEN tip IS average;
+    RULE 5 : IF postura IS mala AND desarrollo IS malo AND oratoria IS regular
+                THEN nota IS baja;
                 
-    RULE 6 : IF service IS excellent AND food IS normal 
-                THEN tip IS generous;
+    RULE 6 : IF postura IS mala AND desarrollo IS regular AND oratoria IS regular
+                THEN nota IS baja;
                 
-    RULE 7 : IF service IS poor AND food IS delicious 
-                THEN tip IS cheap;
+    RULE 7 : IF postura IS mala AND desarrollo IS bueno AND oratoria IS regular
+                THEN nota IS media;
                 
-    RULE 8 : IF service IS good AND food IS delicious 
-                THEN tip IS generous;
+    RULE 8 : IF postura IS mala AND desarrollo IS excelente AND oratoria IS regular
+                THEN nota IS media;
                 
-    RULE 9 : IF service IS excellent AND food IS delicious 
-                THEN tip IS generous;
+    RULE 9 : IF postura IS mala AND desarrollo IS malo AND oratoria IS buena
+                THEN nota IS baja;  
+
+    RULE 10 : IF postura IS mala AND desarrollo IS regular AND oratoria IS buena
+                THEN nota IS media;
+
+    RULE 11 : IF postura IS mala AND desarrollo IS bueno AND oratoria IS buena
+                THEN nota IS alta;
+
+    RULE 12 : IF postura IS mala AND desarrollo IS excelente AND oratoria IS buena
+                THEN nota IS alta;
+
+    //postura regular
+
+    RULE 13 : IF postura IS regular AND desarrollo IS malo AND oratoria IS mala
+                THEN nota IS baja;
+    
+    RULE 14 : IF postura IS regular AND desarrollo IS regular AND oratoria IS mala
+                THEN nota IS baja;
+                
+    RULE 15 : IF postura IS regular AND desarrollo IS bueno AND oratoria IS mala
+                THEN nota IS media;
+                
+    RULE 16 : IF postura IS regular AND desarrollo IS excelente AND oratoria IS mala
+                THEN nota IS media;
+                
+    RULE 17 : IF postura IS regular AND desarrollo IS malo AND oratoria IS regular
+                THEN nota IS baja;
+
+    RULE 18 : IF postura IS regular AND desarrollo IS regular AND oratoria IS regular
+                THEN nota IS media;            
+
+    RULE 19 : IF postura IS regular AND desarrollo IS bueno AND oratoria IS regular
+                THEN nota IS media;
+                
+    RULE 20 : IF postura IS regular AND desarrollo IS excelente AND oratoria IS regular
+                THEN nota IS alta;  
+
+    RULE 21 : IF postura IS regular AND desarrollo IS malo AND oratoria IS buena
+                THEN nota IS baja;
+
+    RULE 22 : IF postura IS regular AND desarrollo IS regular AND oratoria IS buena
+                THEN nota IS media;
+
+    RULE 23 : IF postura IS regular AND desarrollo IS bueno AND oratoria IS buena
+                THEN nota IS alta;
+    
+    RULE 24 : IF postura IS regular AND desarrollo IS excelente AND oratoria IS buena
+                THEN nota IS alta;
+    
+
+//postura buena
+
+    RULE 25 : IF postura IS buena AND desarrollo IS malo AND oratoria IS mala
+                THEN nota IS baja;
+ 
+    RULE 26 : IF postura IS buena AND desarrollo IS regular AND oratoria IS mala
+                THEN nota IS media;
+                
+    RULE 27 : IF postura IS buena AND desarrollo IS bueno AND oratoria IS mala
+                THEN nota IS media;
+                
+    RULE 28 : IF postura IS buena AND desarrollo IS excelente AND oratoria IS mala
+                THEN nota IS media;
+                
+    RULE 29 : IF postura IS buena AND desarrollo IS malo AND oratoria IS regular
+                THEN nota IS baja;
+                
+    RULE 30 : IF postura IS buena AND desarrollo IS regular AND oratoria IS regular
+                THEN nota IS media;  
+
+    RULE 31 : IF postura IS buena AND desarrollo IS bueno AND oratoria IS regular
+                THEN nota IS alta;
+
+    RULE 32 : IF postura IS buena AND desarrollo IS excelente AND oratoria IS regular
+                THEN nota IS alta;
+
+    RULE 33 : IF postura IS buena AND desarrollo IS malo AND oratoria IS buena
+                THEN nota IS baja;
+    
+    RULE 34 : IF postura IS buena AND desarrollo IS regular AND oratoria IS buena
+                THEN nota IS media;
+    
+    RULE 35 : IF postura IS buena AND desarrollo IS bueno AND oratoria IS buena
+                THEN nota IS alta;
+                
+    RULE 36 : IF postura IS buena AND desarrollo IS excelente AND oratoria IS buena
+                THEN nota IS alta;
+                 
 END_RULEBLOCK
 
 END_FUNCTION_BLOCK
