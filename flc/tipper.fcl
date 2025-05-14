@@ -3,14 +3,14 @@ FUNCTION_BLOCK calificaExpress //nombre del problema
 
 // Define input variables
 VAR_INPUT
-    postura : REAL; //nombre + tipo de dato
+    postura : REAL; 
     desarrollo : REAL;
     oratoria : REAL;
 END_VAR
 
 // Define output variable
 VAR_OUTPUT
-    nota : REAL; //nombre + tipo de dato
+    nota : REAL; 
 END_VAR
 
 // Input
@@ -20,7 +20,7 @@ FUZZIFY postura
     TERM buena := (6, 0) (8, 1) (10, 1);
 END_FUZZIFY
 
-//TERM poor: arranco de (0,1) a (4,0). Unir puntos y formar area
+//TERM poor: arranco de (0,1) a (4,0). 
 
 // Input
 FUZZIFY desarrollo
@@ -45,20 +45,8 @@ DEFUZZIFY nota
     // Use 'Center Of Gravity' defuzzification method
     METHOD : COG;
     // Default value is 0 (if no rule activates defuzzifier)
-    DEFAULT := 0; //si no hay definition de un area por defecto 0
+    DEFAULT := 0; 
 END_DEFUZZIFY
-
-//en defuzzify solo cambia el metodo, centro de gravity: cantroide
-//Centroide: De las areas que quedaron se saca el centro
-
-//			service     poor     good       excellent
-//	food        
-//	rancid              cheap    cheap      cheap
-//  normal              cheap    average    generous
-//	delicious			cheap    generous   generous
-//
-
-//cuanto pagar en terminos linguisticos
 
 RULEBLOCK No1
     // Use 'min' for 'and' (also implicit use 'max'
